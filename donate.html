@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支持作者 - 优雅工具导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5d5c88;
+            --secondary: #8d8ca7;
+            --accent: #b3a7d9;
+            --light: #f9f7fe;
+            --dark: #43425d;
+            --gray: #8887a0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 10px 30px rgba(93, 92, 136, 0.12);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f6f5fc 0%, #f1f0fa 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 60px 20px;
+        }
+
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--accent) 1px, transparent 0.5px);
+            background-size: 20px 20px;
+            opacity: 0.12;
+            z-index: -1;
+        }
+
+        .donation-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            border-radius: 4px;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 30px auto 0;
+            color: var(--gray);
+            padding: 0 20px;
+            font-weight: 400;
+            line-height: 1.75;
+        }
+
+        .appreciation-section {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(178, 177, 217, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .appreciation-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 18px 18px 0 0;
+            opacity: 0.8;
+        }
+
+        .appreciation-icon {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+
+        .appreciation-text {
+            font-size: 1.15rem;
+            color: var(--gray);
+            margin: 0 auto 30px;
+            max-width: 800px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .payment-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(178, 177, 217, 0.2);
+            backdrop-filter: blur(4px);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px rgba(93, 92, 136, 0.18);
+            border-color: rgba(178, 177, 217, 0.4);
+        }
+
+        .payment-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 18px 18px 0 0;
+            opacity: 0.8;
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .payment-title {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .payment-desc {
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #eef1f9, #f6f5fc);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(178, 177, 217, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-code:before {
+            content: '支付二维码';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0.3;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 15px 30px;
+            background: rgba(179, 167, 217, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(93, 92, 136, 0.1);
+        }
+
+        .back-btn i {
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            box-shadow: 0 8px 20px rgba(93, 92, 136, 0.25);
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-5px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 900px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .appreciation-section {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .payment-card {
+                padding: 30px 20px;
+            }
+            
+            .qr-code {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .appreciation-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="donation-container">
+        <header>
+            <h1>支持与鼓励</h1>
+            <p class="subtitle">您的支持是我们持续优化、更新的动力，让我们共同打造更好的网站导航平台</p>
+        </header>
+        
+        <section class="appreciation-section">
+            <i class="fas fa-hands-helping appreciation-icon"></i>
+            <p class="appreciation-text">
+                首先，非常感谢您对<span class="highlight">Chidori Shiori 的网站合集</span>的认可与喜爱！这个平台创建至今已经帮助了<span class="highlight">数名LSP</span>找到高效看片网站。您的每一份支持都将直接用于：
+            </p>
+            <p class="appreciation-text">
+                服务器维护与平台升级<br>
+                新增更多优质设计开发资源<br>
+                改善用户体验与界面优化<br>
+                未来开发更多高效工具
+            </p>
+        </section>
+        
+        <div class="payment-methods">
+            <div class="payment-card">
+                <i class="fab fa-weixin payment-icon"></i>
+                <h3 class="payment-title">微信支付</h3>
+                <p class="payment-desc">暂未开通微信打赏功能。</p>
+                <div class="qr-code">
+                    <!-- 这里放置微信支付二维码图片 -->
+                    <!-- <img src="wechat-qr.jpg" alt="微信支付二维码"> -->
+                </div>
+            </div>
+            
+            <div class="payment-card">
+                <i class="fab fa-alipay payment-icon"></i>
+                <h3 class="payment-title">支付宝</h3>
+                <p class="payment-desc">支付宝扫一扫完成支持。</p>
+                <div class="qr-code">
+                    <!-- 这里放置支付宝支付二维码图片 -->
+                    <!-- <img src="alipay-qr.jpg" alt="支付宝二维码"> -->
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回网站导航
+            </a>
+        </div>
+        
+        <footer>
+            <p>© 2025 Chidori Shiori. All rights reserved.</p>
+            <p>您的支持，是我们前进的最大动力</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 添加一些互动效果
+        document.querySelectorAll('.payment-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+        
+        // 简单的感谢动画
+        const icon = document.querySelector('.appreciation-icon');
+        setInterval(() => {
+            icon.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                icon.style.transform = 'scale(1)';
+            }, 300);
+        }, 3000);
+    </script>
+</body>
+</html>

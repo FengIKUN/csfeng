@@ -1,7 +1,596 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chidori Shiori 的网站合集</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0c0b33;
+            --secondary: #131150;
+            --accent: #423a5c;
+            --light: #72b197;
+            --dark: #43425d;
+            --gray: #8887a0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 10px 30px rgba(93, 92, 136, 0.12);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f6f5fc 0%, #f1f0fa 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--accent) 1px, transparent 0.5px);
+            background-size: 20px 20px;
+            opacity: 0.12;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            border-radius: 4px;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 30px auto 0;
+            color: var(--gray);
+            padding: 0 20px;
+            font-weight: 400;
+            line-height: 1.75;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 35px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(178, 177, 217, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px rgba(93, 92, 136, 0.18);
+            border-color: rgba(178, 177, 217, 0.4);
+        }
+
+        .tool-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 18px 18px 0 0;
+            opacity: 0.8;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .tool-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            color: var(--light);
+            font-size: 1.7rem;
+            box-shadow: 0 5px 15px rgba(93, 92, 136, 0.2);
+        }
+
+        .tool-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .tool-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            padding: 6px 0;
+            position: relative;
+        }
+
+        .tool-link:after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0.8);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-link:hover:after {
+            transform: scaleX(1);
+        }
+
+        .tool-description {
+            color: var(--gray);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .features-title {
+            font-weight: 600;
+            margin: 30px 0 16px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(141, 140, 167, 0.2);
+        }
+
+        .features-title i {
+            margin-right: 12px;
+            background: var(--accent);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .features-list {
+            list-style: none;
+            padding-left: 5px;
+        }
+
+        .features-list li {
+            margin-bottom: 14px;
+            padding-left: 32px;
+            position: relative;
+            color: var(--gray);
+            transition: transform 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .features-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .features-list li:before {
+            content: '•';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            color: var(--accent);
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 70px;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer .copyright {
+            font-size: 0.9rem;
+            margin-top: 20px;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 900px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tool-card {
+                padding: 28px;
+            }
+            
+            .tool-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
+            }
+            
+            .tool-title {
+                font-size: 1.3rem;
+            }
+        }
+                /* 在现有CSS文件中添加以下样式 */
+        .additional-cards {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .support-card, .contact-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(178, 177, 217, 0.2);
+        }
+
+        .support-card {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(179, 167, 217, 0.1), rgba(93, 92, 136, 0.1));
+        }
+
+        .contact-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .support-content, .contact-content {
+            width: 100%;
+        }
+
+        .support-icon, .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .support-card h3, .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .support-card p, .contact-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .support-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(93, 92, 136, 0.25);
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(93, 92, 136, 0.35);
+        }
+
+        .contact-methods {
+            margin: 20px 0;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            background: rgba(179, 167, 217, 0.08);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .contact-method:hover {
+            background: rgba(179, 167, 217, 0.15);
+        }
+
+        .contact-method i {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .contact-btn {
+            width: 100%;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--primary);
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .contact-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .additional-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>
-Test
-</h1>
+    <div class="container">
+        <header>
+            <h1>Chidori Shiori 的网站合集</h1>
+            <p class="subtitle">精选优质网站资源，专业级网站整理，来自 Chidori Shiori.</p>
+        </header>
+        
+        <main class="tools-grid">
+            <!-- Figma 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="tool-title">TuantuanKP</h2>
+                </div>
+                <p class="tool-description">咕咕咕。</p>
+                <a href="https://taoh996.com/" target="_blank" class="tool-link">taoh996.com</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特点</h3>
+                <ul class="features-list">
+                    <li>部分视频需要VIP或付费</li>
+                    <li>iPad部分机型无法加载</li>
+                    <li>有未成年视频</li>
+                    <li>适配竖屏，横屏体验较差</li>
+                </ul>
+            </article>
+            
+            <!-- Adobe XD 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="tool-title">LAOW</h2>
+                </div>
+                <p class="tool-description">老王视频。</p>
+                <a href="https://laow1.cc" target="_blank" class="tool-link">laow1.cc</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特点</h3>
+                <ul class="features-list">
+                    <li>视频质量一般</li>
+                    <li>视频加载速度较慢</li>
+                    <li>无未成年视频</li>
+                    <li>免费</li>
+                </ul>
+            </article>
+            
+            <!-- Coolors 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="tool-title">HSCK</h2>
+                </div>
+                <p class="tool-description">黄色仓库。</p>
+                <a href="https://hsck.net/" target="_blank" class="tool-link">hsck.net</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特点</h3>
+                <ul class="features-list">
+                    <li>视频加载速度快</li>
+                    <li>广告非常多</li>
+                    <li>免费</li>
+                </ul>
+            </article>
+            
+            <!-- Fontpair 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="tool-title">X夜社</h2>
+                </div>
+                <p class="tool-description">X夜社。</p>
+                <a href="https://xyeshe.com/" target="_blank" class="tool-link">xyeshe.com</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特点</h3>
+                <ul class="features-list">
+                    <li>主打动漫</li>
+                    <li>部分视频和功能需要VIP</li>
+                    <li>特色功能，如AI涩图、换脸</li>
+                    <li>禁止未成年</li>
+                </ul>
+            </article>
+            
+            <!-- Codepen 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="tool-title">XHamster</h2>
+                </div>
+                <p class="tool-description">老牌Porn片网站。</p>
+                <a href="https://xhamster.com/" target="_="_blank" class="tool-link">xhamster.com</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特点</h3>
+                <ul class="features-list">
+                    <li>加载慢，有时无法连接</li>
+                    <li>视频数量多，类型齐全</li>
+                    <li>历史悠久</li>
+                    <li>广告少</li>
+                </ul>
+            </article>
+            
+            <!-- Unsplash 卡片 -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fab fa-codepen"></i>
+                    </div>
+                    <h2 class="tool-title">NthLink</h2>
+                </div>
+                <p class="tool-description">推荐梯子，有了梯子，你就可以自己出去搜片啦。来自由亚洲自由电台和VOA投资的团队。</p>
+                <a href="https://www.downloadnth.com/download.html" target="_blank" class="tool-link">nthlink.com</a>
+                
+                <h3 class="features-title"><i class="fas fa-star"></i> 特色功能</h3>
+                <ul class="features-list">
+                    <li>背景强势，稳定性好</li>
+                    <li>永久免费</li>
+                    <li>速度快</li>
+                    <li>保密性能好</li>
+                    <li>不能自由选择节点，有时会遇到节点被IP封禁的问题</li>
+                </ul>
+            </article>
+        </main>
+
+        <!-- 在</main>结束标签之后，<footer>之前添加以下代码 -->
+        <div class="additional-cards">
+            <!-- 打赏作者卡片 -->
+            <article class="support-card">
+                <div class="support-content">
+                    <div class="support-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>支持与鼓励</h3>
+                    <p>如果您觉得这个导航页有帮助，欢迎打赏支持</p>
+                    <a href="./donate.html" class="support-btn">支持作者</a>
+                </div>
+            </article>
+            
+            <!-- 联系方式卡片 -->
+            <article class="contact-card">
+                <div class="contact-content">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>投稿与联系</h3>
+                    <p>如果您有优秀的网站推荐，欢迎投稿分享</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fab fa-github"></i>
+                            <span>Github: @Fengikun</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-heart"></i>
+                            <span>QQ: 3070598318</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email: feng.ikunmu@foxmail.com</span>
+                        </div>
+                    </div>
+                    <button class="contact-btn">提交工具推荐</button>
+                </div>
+            </article>
+        </div>
+        <footer>
+            <p>持续更新最新最热网站</p>
+            <p class="copyright">© 2025 Chidori Shiori. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
